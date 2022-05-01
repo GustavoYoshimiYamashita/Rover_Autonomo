@@ -83,10 +83,7 @@ while robot.step(TIME_STEP) != -1:
     surface.fill(black)
     pygame.draw.circle(surface, white, (centroX, centroY), 5)
 
-    # Coletando dado polar
-    imagem = lidar.getRangeImage()
-
-    list = []
+    # Coletado a leitura das 10 camadas de altura do Lidar
     range1 = lidar.getLayerRangeImage(0)
     range2 = lidar.getLayerRangeImage(1)
     range3 = lidar.getLayerRangeImage(2)
@@ -98,6 +95,7 @@ while robot.step(TIME_STEP) != -1:
     range9 = lidar.getLayerRangeImage(8)
     range10 = lidar.getLayerRangeImage(9)
 
+    # Descobrindo o número de pontos coletados em cada camada
     numberRange1 = len(range1)
     numberRange2 = len(range2)
     numberRange3 = len(range3)
@@ -109,6 +107,7 @@ while robot.step(TIME_STEP) != -1:
     numberRange9 = len(range9)
     numberRange10 = len(range10)
 
+    # Fazendo a transformação da coordenada cilíndrica
     listaValorXRange1, listaValorYRange1 = lidar_funcoes.leitura_lidar(numberRange1, Lidar, lidar, range1)
     listaValorXRange2, listaValorYRange2 = lidar_funcoes.leitura_lidar(numberRange2, Lidar, lidar, range2)
     listaValorXRange3, listaValorYRange3 = lidar_funcoes.leitura_lidar(numberRange3, Lidar, lidar, range3)
@@ -120,15 +119,16 @@ while robot.step(TIME_STEP) != -1:
     listaValorXRange9, listaValorYRange9 = lidar_funcoes.leitura_lidar(numberRange9, Lidar, lidar, range9)
     listaValorXRange10, listaValorYRange10 = lidar_funcoes.leitura_lidar(numberRange10, Lidar, lidar, range10)
 
+    fig = plt.figure()
     ax = plt.axes(projection='3d')
 
-    # Data for three-dimensional scattered points
+    # Dados para plotar em 3D
     zdata = 128 * [1] + 128 * [2] + 128 * [3] + 128 * [4] + 128 * [5] + 128 * [6] + 128 * [7] + 128 * [8] + 128 * [9] + 128 * [10]
     xdata = listaValorXRange1 + listaValorXRange2 + listaValorXRange3 + listaValorXRange4 + listaValorXRange5 + listaValorXRange6 + listaValorXRange7 + listaValorXRange8 + listaValorXRange9 + listaValorXRange10
     ydata = listaValorYRange1 + listaValorYRange2 + listaValorYRange3 + listaValorYRange4 + listaValorYRange5 + listaValorYRange6 + listaValorYRange7 + listaValorYRange8 + listaValorYRange9 + listaValorYRange10
     ax.scatter3D(xdata, ydata, zdata, c=zdata, cmap='Greens')
 
-
+    # Plotando o gráfico
     plt.show()
 
     pygame.display.update()
