@@ -128,9 +128,8 @@ while robot.step(TIME_STEP) != -1:
     ydata = listaValorYRange1 + listaValorYRange2 + listaValorYRange3 + listaValorYRange4 + listaValorYRange5 + listaValorYRange6 + listaValorYRange7 + listaValorYRange8 + listaValorYRange9 + listaValorYRange10
     ax.scatter3D(xdata, ydata, zdata, c=zdata, cmap='Greens')
 
-    if (datetime.now() - now).seconds > 5:
-        now = datetime.now()
-        plt.show()
+
+    plt.show()
 
     pygame.display.update()
     pygame.display.flip()
